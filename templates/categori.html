@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <main>
+   <!-- Whats New Start -->
+    <section class="whats-news-area pt-50 pb-20">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-8">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="section-tittle mb-30">
+                            <h3>Whats New</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9">
+                        <div class="properties__button">
+                            <!--Nav Button  -->                                            
+                            <nav>                                                                     
+                                <div class="nav nav-tabs" id="portfolio-flters" role="tablist">
+                                    <li class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home" aria-selected="true">All</li>
+                                    {% for cat in cat  %}
+                                        <li style="cursor: pointer" class="nav-item nav-link menu_link" id="nav-profile-tab" data-toggle="tab"  role="tab" aria-controls="nav-profile" >{{ cat.name }}</li>
+                                    {% endfor %}
+                                </div>
+                            </nav>
+                            <!--End Nav Button  -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                        <div class="col-12">
+                        <!-- Nav Card -->
+                        <div class="tab-content" id="nav-tabContent">
+                            <!-- card one -->
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="whats-news-caption">
+                                    <div class="row  portfolio-container">
+                                        {% for post in posts %}
+                                        <div class="col-lg-6 col-md-6 portfolio-item {{ post.category }}">
+                                            <div class="single-what-news mb-100 position-relative overflow-hidden">
+                                                <div class="what-img">
+                                                    <img class="rounded" style="max-height: 300px;max-width: 362px;min-height: 300px;min-width: 362px" src="{{ post.get_image }}" alt="">
+                                                </div>
+                                                <div class="what-cap">
+                                                    <span class="color1">{{ post.category }}</span>
+                                                    <h4><a href="#">{{ post.title | slice:"45"}}</a></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- End Nav Card -->
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Section Tittle -->
+                <div class="section-tittle mb-40">
+                    <h3>Follow Us</h3>
+                </div>
+                <!-- Flow Socail -->
+                <div class="single-follow mb-45">
+                    <div class="single-box">
+                        <div class="follow-us d-flex align-items-center">
+                            <div class="follow-social">
+                                <a href="#"><img src="{% static 'assets/img/news/icon-fb.png' %}" alt=""></a>
+                            </div>
+                            <div class="follow-count">  
+                                <span>8,045</span>
+                                <p>Fans</p>
+                            </div>
+                        </div> 
+                        <div class="follow-us d-flex align-items-center">
+                            <div class="follow-social">
+                                <a href="#"><img src="{% static 'assets/img/news/icon-tw.png' %}" alt=""></a>
+                            </div>
+                            <div class="follow-count">
+                                <span>8,045</span>
+                                <p>Fans</p>
+                            </div>
+                        </div>
+                            <div class="follow-us d-flex align-items-center">
+                            <div class="follow-social">
+                                <a href="#"><img src="{% static 'assets/img/news/icon-ins.png' %}" alt=""></a>
+                            </div>
+                            <div class="follow-count">
+                                <span>8,045</span>
+                                <p>Fans</p>
+                            </div>
+                        </div>
+                        <div class="follow-us d-flex align-items-center">
+                            <div class="follow-social">
+                                <a href="#"><img src="{% static 'assets/img/news/icon-yo.png' %}" alt=""></a>
+                            </div>
+                            <div class="follow-count">
+                                <span>8,045</span>
+                                <p>Fans</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Poster -->
+                <div class="news-poster d-none d-lg-block">
+                    <img src="{% static 'assets/img/news/news_card.jpg' %}" alt="">
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- Whats New End -->
+
+
+    <!--Start pagination -->
+    <div class="pagination-area pb-45 text-center">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="single-wrap d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+
+                             {% if posts.has_other_pages %}
+                                <ul class="pagination">
+                                 {% if posts.has_previous %}
+                                  <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a></li>
+                                {% else %}
+                                  <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                                  {% endif %}
+                                {% for i in posts.paginator.page_range %}
+                                  {% if posts.number == i %}
+                                  <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{ i }}</a></li>
+                                  {% else %}
+                                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                  {% endif %}
+                                  {% endfor %}
+                                {% if posts.has_next %}
+                                  <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">Next</a></li>
+                                {% else %}
+                                  <li class="page-item disabled"><span class="page-link">Next</span></li>
+                                  {% endif %}
+                                {% endif %}
+                          </nav>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- End pagination  -->
+    </main>
+    
+{% endblock content %}
